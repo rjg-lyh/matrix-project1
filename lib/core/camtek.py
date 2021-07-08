@@ -2,6 +2,7 @@ from .base import AoiInfo
 import configparser
 import os
 from pathlib import Path
+import numpy as np
 
 class CamtekInfo(AoiInfo):
     def __init__(self, aoi_info):
@@ -26,6 +27,16 @@ class CamtekInfo(AoiInfo):
         # image center location
         image_center_location = (offset_col / die_size_col, offset_row / die_size_row)
         return image_center_location
+
+    @property
+    def magnification(self) -> float:
+        """
+        Lens magnification ratio (eg: 5x, 10x), which is negtively relative to the pixel size.
+        Relations of the lens mag and the pixel size differ among different AOI device manufacturers.
+        """
+        k = 0.93 * 5  # pixel size = 0.93um in mag 5x
+        mag = k / np.mean(self.pixel_size)
+        return mag
 
 
     @classmethod

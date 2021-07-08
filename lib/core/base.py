@@ -17,6 +17,13 @@ class AoiInfo(object):
         """
         raise NotImplementedError
         
+    @property
+    def magnification(self) -> float:
+        """
+        Lens magnification ratio (eg: 5x, 10x), which is negtively relative to the pixel size.
+        Relations of the lens mag and the pixel size differ among different AOI device manufacturers.
+        """
+        raise NotImplementedError
 
 
 
@@ -52,3 +59,7 @@ class AoiInfo(object):
     @property
     def initial_location(self):
         return self.location_in_die
+
+    @property
+    def mag(self):
+        return self.magnification

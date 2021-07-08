@@ -7,3 +7,4 @@ if __name__ == '__main__':
     print("Product Name:", aoi_info.product)
     print("Initial Location:", aoi_info.location)
     print("Image Resolution (um):", aoi_info.resolution)
+    print("Lens Magnification: {:.2f}x".format(aoi_info.mag))
