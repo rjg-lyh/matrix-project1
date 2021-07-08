@@ -63,3 +63,11 @@ class AoiInfo(object):
     @property
     def mag(self):
         return self.magnification
+
+    @property
+    def lens_mag(self):
+        return self.magnification
+
+    @property
+    def lens_magnification(self):
+        return self.magnification
