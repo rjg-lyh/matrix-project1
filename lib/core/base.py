@@ -26,6 +26,15 @@ class AoiInfo(object):
         raise NotImplementedError
 
 
+    def show(self):
+        print("Product Name:", self.product)
+        print("Initial Location:", self.location)
+        print("Image Resolution (um):", self.resolution)
+        print("Lens Magnification: {:.2f}x".format(self.mag))
+
+    dump = show
+
+
 
     ## Alias
     @property
