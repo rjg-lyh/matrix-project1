@@ -19,18 +19,16 @@ class CamtekInfo(AoiInfo):
         Return the location of the image center relative to a die, whose top-left corner as the origin (0, 0).
         The location is normalized by the die size (eg: (0.664, 0.23)).
         """
+        # die size in pixel (wafer coordinates)
         die_size_col = self.aoi_info['die_size_col']
         die_size_row = self.aoi_info['die_size_row']
-        die_col = self.aoi_info['die_col']
-        die_row = self.aoi_info['die_row']
+        # defect location (usually the image center in Camtek settings) in pixel (wafer coordinates)
         col = self.aoi_info['col']
         row = self.aoi_info['row']
 
-        diecenter_col = die_col * die_size_col
-        diecenter_row = die_row * die_size_row
-
-        offset_col = col - diecenter_col
-        offset_row = row - diecenter_row
+        # compute the relative location of the defect in die (die coordinates)
+        offset_col = col % die_size_col
+        offset_row = row % die_size_row
 
         # image center location
         image_center_location = (offset_col / die_size_col, offset_row / die_size_row)
