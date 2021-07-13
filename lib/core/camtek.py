@@ -48,8 +48,9 @@ class CamtekInfo(AoiInfo):
     @property
     def die_size(self) -> str:
         """ Return the die size in pixel, in current pixel resolution, in xy manner (eg: (1092, 2500)) """
-        die_size_col = self.aoi_info['die_size_col']
-        die_size_row = self.aoi_info['die_size_row']
+        pixel_size_col, pixel_size_row = self.pixel_size
+        die_size_col = self.aoi_info['die_size_col'] / pixel_size_col
+        die_size_row = self.aoi_info['die_size_row'] / pixel_size_row
         return (die_size_col, die_size_row)
 
     @property
