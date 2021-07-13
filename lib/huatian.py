@@ -28,12 +28,6 @@ class HuatianAoiInfo(CamtekInfo):
         """
         die_size_col = self.aoi_info['die_size_col']
         die_size_row = self.aoi_info['die_size_row']
-        offset_col = self.aoi_info['offset_col']
-        offset_row = self.aoi_info['offset_row']
-
-
-        die_size_col = self.aoi_info['die_size_col']
-        die_size_row = self.aoi_info['die_size_row']
         die_col = self.aoi_info['die_col']
         die_row = self.aoi_info['die_row']
         pix_col = self.aoi_info['pix_col']
