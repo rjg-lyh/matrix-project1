@@ -25,12 +25,18 @@ class AoiInfo(object):
         """
         raise NotImplementedError
 
+    @property
+    def die_size(self) -> str:
+        """ Return the die size in pixel, in current pixel resolution, in xy manner (eg: (1092.2, 2500.15)) """
+        raise NotImplementedError
+
 
     def show(self):
         print("Product Name:", self.product)
         print("Initial Location:", self.location)
         print("Image Resolution (um):", self.resolution)
         print("Lens Magnification: {:.2f}x".format(self.mag))
+        print("Die size in pixel (w,h):", self.die_size)
 
     dump = show
 
@@ -80,3 +86,8 @@ class AoiInfo(object):
     @property
     def lens_magnification(self):
         return self.magnification
+
+    @property
+    def die_size_in_pixel(self):
+        return self.die_size
+
