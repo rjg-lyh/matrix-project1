@@ -1,8 +1,9 @@
 from .base import AoiInfo
 import configparser
-import os
+import os.path as osp
 from pathlib import Path
 import numpy as np
+import cv2
 
 class CamtekInfo(AoiInfo):
     def __init__(self, aoi_info):
@@ -51,6 +52,17 @@ class CamtekInfo(AoiInfo):
         die_size_row = self.aoi_info['die_size_row']
         return (die_size_col, die_size_row)
 
+    @property
+    def image(self) -> np.ndarray:
+        image_path = self.aoi_info['image_path']
+        assert osp.exists(image_path)
+        return cv2.cvtColor(cv2.imread(image_path), cv2.COLOR_BGR2RGB)
+
+    @property
+    def img(self) -> np.ndarray:
+        return self.image
+    
+
 
 
     @classmethod
@@ -60,15 +72,15 @@ class CamtekInfo(AoiInfo):
 
     @classmethod
     def from_image_path(cls, image_path):
-        assert os.path.exists(image_path), 'image_path {} not found'.format(image_path)
+        assert osp.exists(image_path), 'image_path {} not found'.format(image_path)
 
         # get ProductInfo
         image_path_instance = Path(image_path)
         file_name = image_path_instance.name
         product_info = str(image_path_instance.with_name('ProductInfo.ini'))
         colorImageGrabingInfo = str(image_path_instance.with_name('ColorImageGrabingInfo.ini'))
-        assert os.path.exists(product_info), "product_info file {} not found.".format(product_info)
-        assert os.path.exists(colorImageGrabingInfo), "colorImageGrabingInfo file {} not found.".format(colorImageGrabingInfo)
+        assert osp.exists(product_info), "product_info file {} not found.".format(product_info)
+        assert osp.exists(colorImageGrabingInfo), "colorImageGrabingInfo file {} not found.".format(colorImageGrabingInfo)
         ini_parser = configparser.ConfigParser(strict=False)
         ini_parser.read(product_info)
 
