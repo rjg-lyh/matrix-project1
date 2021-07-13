@@ -21,8 +21,16 @@ class CamtekInfo(AoiInfo):
         """
         die_size_col = self.aoi_info['die_size_col']
         die_size_row = self.aoi_info['die_size_row']
-        offset_col = self.aoi_info['offset_col']
-        offset_row = self.aoi_info['offset_row']
+        die_col = self.aoi_info['die_col']
+        die_row = self.aoi_info['die_row']
+        col = self.aoi_info['col']
+        row = self.aoi_info['row']
+
+        diecenter_col = die_col * die_size_col
+        diecenter_row = die_row * die_size_row
+
+        offset_col = col - diecenter_col
+        offset_row = row - diecenter_row
 
         # image center location
         image_center_location = (offset_col / die_size_col, offset_row / die_size_row)
@@ -93,15 +101,6 @@ class CamtekInfo(AoiInfo):
         die_col = round((col - 0.5 * die_size_col) / die_size_col)
         die_row = round((row - 0.5 * die_size_row) / die_size_row)
 
-        if die_col != pix_col or die_row != pix_row:
-            raise RuntimeError("die_col: {} == pix_col: {} and die_row: {} == pix_row: {} asserts error".format(die_col, pix_col, die_row, pix_row))
-
-        diecenter_col = pix_col * die_size_col
-        diecenter_row = pix_row * die_size_row
-
-        offset_col = col - diecenter_col
-        offset_row = row - diecenter_row
-
         aoi_info = dict(
             image_path=image_path, 
             file_name=file_name,
@@ -111,10 +110,12 @@ class CamtekInfo(AoiInfo):
             image_pix_size_row=image_pix_size_row,
             pix_col=pix_col,
             pix_row=pix_row,
+            die_col=die_col,
+            die_row=die_row,
             image_size_col=image_size_col,
             image_size_row=image_size_row,
-            offset_col=offset_col,
-            offset_row=offset_row
+            col = col,
+            row = row
         )
 
         return cls(aoi_info)

@@ -18,3 +18,39 @@ class HuatianAoiInfo(CamtekInfo):
             return product_names.pop()
         else:
             raise RuntimeError("Can not find a product name for path: {}".format(image_path))
+
+
+    @property
+    def location_in_die(self) -> tuple:
+        """
+        Return the location of the image center relative to a die, whose top-left corner as the origin (0, 0).
+        The location is normalized by the die size (eg: (0.664, 0.23)).
+        """
+        die_size_col = self.aoi_info['die_size_col']
+        die_size_row = self.aoi_info['die_size_row']
+        offset_col = self.aoi_info['offset_col']
+        offset_row = self.aoi_info['offset_row']
+
+
+        die_size_col = self.aoi_info['die_size_col']
+        die_size_row = self.aoi_info['die_size_row']
+        die_col = self.aoi_info['die_col']
+        die_row = self.aoi_info['die_row']
+        pix_col = self.aoi_info['pix_col']
+        pix_row = self.aoi_info['pix_row']
+        col = self.aoi_info['col']
+        row = self.aoi_info['row']
+
+        diecenter_col = pix_col * die_size_col
+        diecenter_row = pix_row * die_size_row
+
+        offset_col = col - diecenter_col
+        offset_row = row - diecenter_row
+
+        # check if there're conflicts between different location computation
+        if die_col != pix_col or die_row != pix_row:
+            raise RuntimeError("die_col: {} == pix_col: {} and die_row: {} == pix_row: {} asserts error".format(die_col, pix_col, die_row, pix_row))
+
+        # image center location
+        image_center_location = (offset_col / die_size_col, offset_row / die_size_row)
+        return image_center_location
