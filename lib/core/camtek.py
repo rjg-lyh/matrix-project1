@@ -88,6 +88,10 @@ class CamtekInfo(AoiInfo):
         die_size_col = float(ini_parser.get('Geometric', 'XDieIndex'))
         die_size_row = float(ini_parser.get('Geometric', 'YDieIndex'))
 
+        ## suggested by du yanwei 
+        # die_size_col = float(ini_parser.get('Geometric', 'CustomerDiePitch_X'))
+        # die_size_row = float(ini_parser.get('Geometric', 'CustomerDiePitch_Y'))
+
         # get colorImageGrabingInfo
         ini_parser.read(colorImageGrabingInfo)
         image_pix_size_col = None
