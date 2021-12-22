@@ -1,8 +1,9 @@
 from .base import AoiInfo
 import configparser
-import os
+import os.path as osp
 from pathlib import Path
 import numpy as np
+import cv2
 
 class CamtekInfo(AoiInfo):
     def __init__(self, aoi_info):
@@ -47,9 +48,21 @@ class CamtekInfo(AoiInfo):
     @property
     def die_size(self) -> str:
         """ Return the die size in pixel, in current pixel resolution, in xy manner (eg: (1092, 2500)) """
-        die_size_col = self.aoi_info['die_size_col']
-        die_size_row = self.aoi_info['die_size_row']
+        pixel_size_col, pixel_size_row = self.pixel_size
+        die_size_col = self.aoi_info['die_size_col'] / pixel_size_col
+        die_size_row = self.aoi_info['die_size_row'] / pixel_size_row
         return (die_size_col, die_size_row)
+
+    @property
+    def image(self) -> np.ndarray:
+        image_path = self.aoi_info['image_path']
+        assert osp.exists(image_path)
+        return cv2.cvtColor(cv2.imread(image_path), cv2.COLOR_BGR2RGB)
+
+    @property
+    def img(self) -> np.ndarray:
+        return self.image
+    
 
 
 
@@ -60,20 +73,24 @@ class CamtekInfo(AoiInfo):
 
     @classmethod
     def from_image_path(cls, image_path):
-        assert os.path.exists(image_path), 'image_path {} not found'.format(image_path)
+        assert osp.exists(image_path), 'image_path {} not found'.format(image_path)
 
         # get ProductInfo
         image_path_instance = Path(image_path)
         file_name = image_path_instance.name
         product_info = str(image_path_instance.with_name('ProductInfo.ini'))
         colorImageGrabingInfo = str(image_path_instance.with_name('ColorImageGrabingInfo.ini'))
-        assert os.path.exists(product_info), "product_info file {} not found.".format(product_info)
-        assert os.path.exists(colorImageGrabingInfo), "colorImageGrabingInfo file {} not found.".format(colorImageGrabingInfo)
+        assert osp.exists(product_info), "product_info file {} not found.".format(product_info)
+        assert osp.exists(colorImageGrabingInfo), "colorImageGrabingInfo file {} not found.".format(colorImageGrabingInfo)
         ini_parser = configparser.ConfigParser(strict=False)
         ini_parser.read(product_info)
 
         die_size_col = float(ini_parser.get('Geometric', 'XDieIndex'))
         die_size_row = float(ini_parser.get('Geometric', 'YDieIndex'))
+
+        ## suggested by du yanwei 
+        # die_size_col = float(ini_parser.get('Geometric', 'CustomerDiePitch_X'))
+        # die_size_row = float(ini_parser.get('Geometric', 'CustomerDiePitch_Y'))
 
         # get colorImageGrabingInfo
         ini_parser.read(colorImageGrabingInfo)
