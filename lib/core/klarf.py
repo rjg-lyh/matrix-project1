@@ -12,7 +12,7 @@ class KlarfInfo(AoiInfo):
     @property
     def pixel_size(self) -> tuple:
         """ Return the camera resolution in pixel size in xy manner (eg: (0.95, 0.95)) """
-        return (.95, .95)
+        raise NotImplementedError()
 
     @property
     def location_in_die(self) -> tuple:
@@ -73,14 +73,16 @@ class KlarfInfo(AoiInfo):
         assert len(img_info) == 1, "Find 0 or more than one record about file: {}".format(image_path)
         die_size_col, die_size_row = klarf_info['die_size_xy']
 
+        assert 'XREL' in img_info and 'YREL' in img_info, "No location records found in klarf: {}".format(image_path)
+
         aoi_info = dict(
             image_path=image_path, 
             file_name=file_name,
             setup_id=klarf_info['setup_id'],
             die_size_col=die_size_col,
             die_size_row=die_size_row,
-            col=float(img_info['XINDEX']),
-            row=float(img_info['YINDEX'])
+            col=float(img_info['XREL']),
+            row=float(img_info['YREL'])
         )
 
         return cls(aoi_info)
