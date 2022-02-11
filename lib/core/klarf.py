@@ -1,5 +1,5 @@
 from .base import AoiInfo
-from .utils import parse_klarf
+from .utils import parse_klarf, parse_klarf_lines
 import os
 from pathlib import Path
 import numpy as np
@@ -49,6 +49,26 @@ class KlarfInfo(AoiInfo):
         return (die_size_col, die_size_row)
 
 
+    @classmethod
+    def _format_klarf_info(cls, klarf_info, image_name):
+        df = klarf_info['defects']
+        img_info = df[df['IMAGENAME'] == image_name]
+        assert len(img_info) == 1, "Find 0 or more than one record about file: {}".format(image_name)
+        die_size_col, die_size_row = klarf_info['die_size_xy']
+
+        assert 'XREL' in img_info and 'YREL' in img_info, "No location records found in klarf: {}".format(image_name)
+
+        aoi_info = dict(
+            file_name=image_name,
+            setup_id=klarf_info['setup_id'],
+            die_size_col=die_size_col,
+            die_size_row=die_size_row,
+            col=float(img_info['XREL']),
+            row=float(img_info['YREL'])
+        )
+
+        return cls(aoi_info)
+
 
     @classmethod
     def from_path(cls, image_path):
@@ -61,28 +81,21 @@ class KlarfInfo(AoiInfo):
 
         # get ProductInfo
         image_path_instance = Path(image_path)
-        file_name = image_path_instance.name
+        image_name = image_path_instance.name
 
         image_dir = os.path.dirname(image_path)
         klarf_files = glob.glob(os.path.join(image_dir, '*.klarf'))
         assert len(klarf_files) == 1, "Find 0 or more than one klarf files in folder: {}".format(image_dir)
 
         klarf_info = parse_klarf(klarf_files[0])
-        df = klarf_info['defects']
-        img_info = df[df['IMAGENAME'] == file_name]
-        assert len(img_info) == 1, "Find 0 or more than one record about file: {}".format(image_path)
-        die_size_col, die_size_row = klarf_info['die_size_xy']
 
-        assert 'XREL' in img_info and 'YREL' in img_info, "No location records found in klarf: {}".format(image_path)
+        return cls._format_klarf_info(klarf_info, image_name)
 
-        aoi_info = dict(
-            image_path=image_path, 
-            file_name=file_name,
-            setup_id=klarf_info['setup_id'],
-            die_size_col=die_size_col,
-            die_size_row=die_size_row,
-            col=float(img_info['XREL']),
-            row=float(img_info['YREL'])
-        )
 
-        return cls(aoi_info)
+    @classmethod
+    def from_klarf_bytes(cls, klarf_bytes, image_name):
+        klarf_contents = klarf_bytes.decode()
+        delimiter = '\r\n' if '\r\n' in klarf_contents else '\n'
+        klarf_lines = klarf_contents.split(delimiter)
+        klarf_info = parse_klarf_lines(klarf_lines)
+        return cls._format_klarf_info(klarf_info, image_name)
