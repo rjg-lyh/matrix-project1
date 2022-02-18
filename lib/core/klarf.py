@@ -48,6 +48,16 @@ class KlarfInfo(AoiInfo):
         die_size_row = self.aoi_info['die_size_row']
         return (die_size_col, die_size_row)
 
+    @property
+    def xindex(self) -> int:
+        """ return the DIE index along x direction """
+        return self.aoi_info['xindex']
+
+    @property
+    def yindex(self) -> int:
+        """ return the DIE index along y direction """
+        return self.aoi_info['yindex']
+
 
     @classmethod
     def _format_klarf_info(cls, klarf_info, image_name):
@@ -64,7 +74,9 @@ class KlarfInfo(AoiInfo):
             die_size_col=die_size_col,
             die_size_row=die_size_row,
             col=float(img_info['XREL']),
-            row=float(img_info['YREL'])
+            row=float(img_info['YREL']),
+            xindex=int(img_info['XINDEX']),
+            yindex=int(img_info['YINDEX'])
         )
 
         return cls(aoi_info)
