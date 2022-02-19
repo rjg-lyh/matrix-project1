@@ -71,6 +71,7 @@ class KlarfInfo(AoiInfo):
         aoi_info = dict(
             file_name=image_name,
             setup_id=klarf_info['setup_id'],
+            device_id=klarf_info['device_id'],
             die_size_col=die_size_col,
             die_size_row=die_size_row,
             col=float(img_info['XREL']),

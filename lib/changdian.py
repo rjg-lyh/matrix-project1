@@ -4,7 +4,12 @@ import numpy as np
 class ChangdianAoiInfo(KlarfInfo):
     @property
     def product_name(self) -> str:
-        return self.aoi_info['setup_id']
+        setup_id = self.aoi_info['setup_id']
+        device_id = self.aoi_info['device_id']
+        if setup_id.endswith('-'+device_id):
+            return setup_id
+        else:
+            return setup_id + '-' + device_id
 
     @property
     def pixel_size(self) -> tuple:
@@ -12,20 +17,22 @@ class ChangdianAoiInfo(KlarfInfo):
         # Estimated pixel size of images, assuming the golden image has mag x3 (which in rodulph's case also means pixel_size = 3)
         template2pixelsize = {
             'GF-GST9414R12-UBM': 3.,
-            'JM-LA5211STAA': 3.,
+            'JM-LA5211STAA-UBM': 3.,
             'MH-XA39AD21B(301)-UBM': 3.,
             'MPS-MX3067R22-M1': 3.,
             'MPS-MX3067R22-UBM': 3.,
             'MPS-SM3035AR30-UBM': 3.,
             'MPS-ST2769R19-UBM': 3.,
-            'MPS-ST3031R1': 3.,
+            'MPS-ST3031R1-UBM': 3.,
+            'MPS-ST3405ZR5-M1': 3.,
+            'MPS-ST3405ZR5-UBM': 3.,
             'MPS-ST3099R5-UBM': 3.,
-            'MPS-ST3620R11': 3.,
+            'MPS-ST3620R11-UBM': 3.,
             'MPS-ST9389ZR14-UBM': 3.,
-            'MPS-ST9410R9': 3.,
+            'MPS-ST9410R9-UBM': 3.,
             'MPS-ST9410R9-M1': 3.,
             'MPS-ST9413R28-UBM': 3.,
-            'MPS-ST9414R12': 3.,
+            'MPS-ST9414R12-UBM': 3.,
             'MPS-ST9430R18-M1': 3.,
             'MPS-ST9430R18-UBM': 3.,
             'TI-CD3701C0AYCUR(MHC0AECP)-M1': 1.5,
