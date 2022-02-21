@@ -18,7 +18,7 @@ class ChangdianAoiInfo(KlarfInfo):
         template2pixelsize = {
             'GF-GST9414R12-UBM': 3.,
             'JM-LA5211STAA-UBM': 3.,
-            'MH-XA39AD21B(301)-UBM': 3.,
+            'MH-XA39AD21B(301)-UBM': 2.975,
             'MPS-MX3067R22-M1': 3.,
             'MPS-MX3067R22-UBM': 3.,
             'MPS-SM3035AR30-UBM': 3.,
