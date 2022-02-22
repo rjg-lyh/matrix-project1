@@ -57,7 +57,10 @@ class ChangdianAoiInfo(KlarfInfo):
         assert self.product in template2pixelsize, "No pixel size record found: ".format(self.product)
         pixel_size = template2pixelsize[self.product]
 
-        return (pixel_size, pixel_size)
+        if isinstance(pixel_size, (tuple, list)):
+            return tuple(pixel_size)
+        else:
+            return (pixel_size, pixel_size)
 
     @property
     def magnification(self) -> float:
