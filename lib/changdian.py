@@ -47,7 +47,11 @@ class ChangdianAoiInfo(KlarfInfo):
             'IS-9764AM1B-GT9764BAS-CLI(BL301)-UBM': 3.,
             'IS-9764AM1D-GT9764BE-CLI(BL301)-UBM': 3.,
             'ON-CAT24C08C4ATR(R8)-M1': 1.175,
-            'ON-CP74-001-SWF(HD4100)-UBM': 1.52
+            'ON-CP74-001-SWF(HD4100)-UBM': 1.52,
+            
+            # 2022.2.22
+            'GF-GST9414R12-M1': 3.,
+            'IF-M4867D(802-FULL)-BALLDROP2': 3.,
         }
 
         assert self.product in template2pixelsize, "No pixel size record found: ".format(self.product)
