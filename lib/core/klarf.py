@@ -59,26 +59,48 @@ class KlarfInfo(AoiInfo):
         return self.aoi_info['yindex']
 
 
+    @property
+    def lot_id(self) -> str:
+        return self.aoi_info['lot_id']
+
+    @property
+    def step_id(self) -> str:
+        return self.aoi_info['step_id']
+
+    @property
+    def wafer_id(self) -> str:
+        return self.aoi_info['wafer_id']
+
+
     @classmethod
     def _format_klarf_info(cls, klarf_info, image_name):
         df = klarf_info['defects']
-        img_info = df[df['IMAGENAME'] == image_name]
-        assert len(img_info) == 1, "Find 0 or more than one record about file: {}".format(image_name)
         die_size_col, die_size_row = klarf_info['die_size_xy']
-
-        assert 'XREL' in img_info and 'YREL' in img_info, "No location records found in klarf: {}".format(image_name)
 
         aoi_info = dict(
             file_name=image_name,
             setup_id=klarf_info['setup_id'],
             device_id=klarf_info['device_id'],
+            lot_id=klarf_info['lot_id'],
+            step_id=klarf_info['step_id'],
+            wafer_id=klarf_info['wafer_id'],
             die_size_col=die_size_col,
-            die_size_row=die_size_row,
-            col=float(img_info['XREL']),
-            row=float(img_info['YREL']),
-            xindex=int(img_info['XINDEX']),
-            yindex=int(img_info['YINDEX'])
+            die_size_row=die_size_row
         )
+
+
+        if image_name is not None:
+            img_info = df[df['IMAGENAME'] == image_name]
+            assert len(img_info) == 1, "Find 0 or more than one record about file: {}".format(image_name)
+            assert 'XREL' in img_info and 'YREL' in img_info, "No location records found in klarf: {}".format(image_name)
+            aoi_info.update(
+                dict(
+                    col=float(img_info['XREL']),
+                    row=float(img_info['YREL']),
+                    xindex=int(img_info['XINDEX']),
+                    yindex=int(img_info['YINDEX'])
+                )
+            )
 
         return cls(aoi_info)
 
@@ -111,4 +133,15 @@ class KlarfInfo(AoiInfo):
         delimiter = '\r\n' if '\r\n' in klarf_contents else '\n'
         klarf_lines = klarf_contents.split(delimiter)
         klarf_info = parse_klarf_lines(klarf_lines)
+        return cls._format_klarf_info(klarf_info, image_name)
+
+
+    @classmethod
+    def from_klarf_path(cls, klarf_file, image_name=None):
+        """
+        get product name, lot id, step id and wafer id etc, from the klarf file.
+        """
+        with open(klarf_file) as fid:
+            lines = list(fid.readlines())
+        klarf_info = parse_klarf_lines(lines)
         return cls._format_klarf_info(klarf_info, image_name)

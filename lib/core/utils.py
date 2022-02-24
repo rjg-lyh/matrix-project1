@@ -60,11 +60,29 @@ def parse_klarf_lines(klarf_lines):
     line_device = jump_to_keyword(fid, 'DeviceID')
     device_id = line_device.split('"')[1].strip(";")
 
+    ## get lot id
+    fid = iter(klarf_lines)
+    line = jump_to_keyword(fid, 'LotID')
+    lot_id = line.split('"')[1].strip(";")
+
+    ## get step id
+    fid = iter(klarf_lines)
+    line = jump_to_keyword(fid, 'StepID')
+    step_id = line.split('"')[1].strip(";")
+
+    ## get wafer id
+    fid = iter(klarf_lines)
+    line = jump_to_keyword(fid, 'WaferID')
+    wafer_id = line.split('"')[1].strip(";")
+
     return dict(
         defects = df,
         die_size_xy = die_size,
         setup_id = setup_id,
-        device_id = device_id
+        device_id = device_id,
+        lot_id = lot_id,
+        step_id = step_id,
+        wafer_id = wafer_id
     )
 
 
