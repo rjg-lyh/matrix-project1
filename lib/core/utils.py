@@ -39,8 +39,11 @@ def parse_klarf_lines(klarf_lines):
     rows = np.array(rows)
     cols = np.array(cols)
 
-    assert len(cols) <= rows.shape[1], "#DefectRecordSpec mismatch"
-    rows = rows[:,:len(cols)]
+    if rows.size > 0:
+        assert len(cols) <= rows.shape[1], "#DefectRecordSpec mismatch"
+        rows = rows[:,:len(cols)]
+    else:
+        rows = rows.reshape([-1, len(cols)])
 
     df = DataFrame(rows, columns=cols)
 
