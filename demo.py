@@ -1,4 +1,6 @@
 from lib.changdian import ChangdianAoiInfo
+from lib.core.sinf import SinfInfo
+import numpy as np
 
 if __name__ == '__main__':
     image_path = 'assets/rodulph/MP2111337A_HJU529-15-G4_UBM_219_2.jpg'
@@ -13,13 +15,15 @@ if __name__ == '__main__':
 
 
     #
-    # Demo for Bailu
+    # Parse Sinf files
     #
-    klarf_file = 'assets/rodulph/MP2111337A_HJU529-15-G4_UBM.klarf'
-    with open(klarf_file, 'rb') as fid:
-        klarf_bytes = fid.read()
-    image_name = 'MP2111337A_HJU529-15-G4_UBM_219_2.jpg'
+    sinf_path = 'assets/example.sinf'
+    sinf_info = SinfInfo.from_sinf_path(sinf_path)
 
-    aoi_info = ChangdianAoiInfo.from_klarf_bytes(klarf_bytes, image_name)
-    print("Initial Location:", aoi_info.location)
-    print("Image Resolution (um):", aoi_info.resolution)
+    print("\n")
+    print("SetupID:", sinf_info.setup_id)
+    print("LotID:", sinf_info.lot_id)
+    print("WaferID:", sinf_info.wafer_id)
+
+    print("Bad DIE IDs:")
+    print(np.where(sinf_info.label_map > 0))
