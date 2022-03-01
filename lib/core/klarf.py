@@ -58,6 +58,9 @@ class KlarfInfo(AoiInfo):
         """ return the DIE index along y direction """
         return self.aoi_info['yindex']
 
+    @property
+    def setup_id(self) -> str:
+        return self.aoi_info['setup_id']
 
     @property
     def lot_id(self) -> str:
