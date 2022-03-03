@@ -88,7 +88,9 @@ class KlarfInfo(AoiInfo):
             step_id=klarf_info['step_id'],
             wafer_id=klarf_info['wafer_id'],
             die_size_col=die_size_col,
-            die_size_row=die_size_row
+            die_size_row=die_size_row,
+            defects = df,
+            classnames = klarf_info['classnames']
         )
 
 

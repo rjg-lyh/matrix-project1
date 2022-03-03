@@ -21,8 +21,10 @@ class SinfInfo(AoiInfo):
 
     
     @property
-    def label_map(self) -> np.ndarray:
+    def label_map_xy(self) -> np.ndarray:
         return self.sinf_info['label_map']
+
+    label_map = label_map_xy
 
 
     @classmethod

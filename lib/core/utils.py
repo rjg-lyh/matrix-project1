@@ -78,7 +78,19 @@ def parse_klarf_lines(klarf_lines):
     line = jump_to_keyword(fid, 'WaferID')
     wafer_id = line.split('"')[1].strip(";")
 
+    ## get class dict
+    classnames = list()
+    fid = iter(klarf_lines)
+    line = jump_to_keyword(fid, 'ClassLookup')
+    num_classes = int(line.strip().split(' ')[1])
+    for _ in range(num_classes):
+        line = next(fid)
+        classname = line.strip().split(' ')[1].strip('"')
+        classnames.append(classname)
+    assert line.strip().endswith(';')
+
     return dict(
+        classnames = classnames,
         defects = df,
         die_size_xy = die_size,
         setup_id = setup_id,
