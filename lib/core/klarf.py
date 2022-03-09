@@ -4,6 +4,8 @@ import os
 from pathlib import Path
 import numpy as np
 import glob
+import os.path as osp
+import cv2
 
 class KlarfInfo(AoiInfo):
     def __init__(self, aoi_info):
@@ -74,6 +76,16 @@ class KlarfInfo(AoiInfo):
     def wafer_id(self) -> str:
         return self.aoi_info['wafer_id']
 
+    @property
+    def image(self) -> np.ndarray:
+        image_path = self.aoi_info['image_path']
+        assert osp.exists(image_path)
+        return cv2.cvtColor(cv2.imread(image_path), cv2.COLOR_BGR2RGB)
+
+    @property
+    def img(self) -> np.ndarray:
+        return self.image
+
 
     @classmethod
     def _format_klarf_info(cls, klarf_info, image_name):
@@ -112,7 +124,9 @@ class KlarfInfo(AoiInfo):
 
     @classmethod
     def from_path(cls, image_path):
-        return cls.from_image_path(image_path)
+        res = cls.from_image_path(image_path)
+        res.aoi_info.update(image_path=image_path)
+        return res
 
 
     @classmethod
