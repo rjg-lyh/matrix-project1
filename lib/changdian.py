@@ -37,7 +37,7 @@ class ChangdianAoiInfo(KlarfInfo):
             'MPS-ST9430R18-UBM': 3.,
             'TI-CD3701C0AYCUR(MHC0AECP)-M1': 1.5,
             'TI-CD3722A2YCUR-UBM': 3.,
-            'TI-CD3701C0AYCUR(RFC0AECP)-BALLDROP': 1.5,
+            'TI-CD3701C0AYCUR(RFC0AECP)-BALLDROP': 3.,
 
             ## mixed with DF
             'MPS-SM3519ZR8-UBM': 3.,
