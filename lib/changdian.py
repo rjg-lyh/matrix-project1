@@ -40,6 +40,7 @@ class ChangdianAoiInfo(KlarfInfo):
             'TI-CD3701C0AYCUR(MHC0AECP)-UBM': 6.,
             
             'TI-CD3701C0AYCUR(RFC0AECP)-BALLDROP': 3.,
+            'TI-CD3701C0AYCUR(RFC0AECP)-M1': 3.,
             'TI-CD3701C0AYCUR(RFC0AECP)-UBM': 3.,
             
             'TI-CD3722A2YCUR-BALLDROP': 3.,
