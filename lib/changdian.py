@@ -38,7 +38,7 @@ class ChangdianAoiInfo(KlarfInfo):
             'TI-CD3701C0AYCUR(MHC0AECP)-M1': 1.5,
             'TI-CD3722A2YCUR-UBM': 3.,
             'TI-CD3701C0AYCUR(RFC0AECP)-BALLDROP': 1.5,
-            'TI-CD3701C0AYCUR(MHC0AECP)-BALLDROP': 3.,
+            'TI-CD3701C0AYCUR(MHC0AECP)-BALLDROP': 1.5,
             'TI-CD3722A2YCUR-BALLDROP': 3.,
 
             ## mixed with DF
