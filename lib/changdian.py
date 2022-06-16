@@ -66,7 +66,6 @@ class ChangdianAoiInfo(KlarfInfo):
             # 2022.6.15
             'TI-G4LP5907AM2925-WP2-UBM': 2.972972972972973,
             'TI-G4LP5918A0-WP2(8K)-UBM': 2.972972972972973,
-            'ON-CP74-001-SWF(HD4100)-M2': 1.4954954954954955,
             'JM-LA5314TAA-M1': 2.972972972972973,
             'GF-GH3692R3-UBM': 2.972972972972973,
             'MPS-ST2997R8-UBM': 2.972972972972973,
@@ -89,6 +88,23 @@ class ChangdianAoiInfo(KlarfInfo):
             'MPS-ST3475ZR4-UBM': 3.0,
             'TI-G4LP5918A0-WP2(8K)-INCOMING': 1.5045045045045045,
             'GF-GMX3222ZR7-UBM': 2.963963963963964,
+
+            # 22.6.16
+            'TI-G2TPS54J060A1-WUP(B2)-M1': 2.991,
+            'TI-G2TPS6280YA1(BUMP)-UBM': 2.982,
+            'JM-LA5314TAA-UBM': 3.045,
+            'TI-G2TMCS1100AB-UBM': 2.955,
+            'TI-87C7037CSPB0HT-WP2(B2N)-UBM': 3,
+            'TI-G2TPS563202B0(B2)-UBM': 2.982,
+            'TI-G2TPS61280AXA2(CA)-M1': 2.991,
+            'TI-G2LV62569NAA12(B2)': 2.982,
+            'TI-G2TPS61280AXA2(CA)-UBM': 2.982,
+            'TI-G2AFE4500SA1-WUP-M1': 2.982,
+            'TI-NTPS56C230A1-WUP-M1': 3.009,
+            'TI-G2TPS61023A0(B2)-M1': 2.991,
+            'ON-CP74-001-SWF(HD4100)-M2': 1.505,
+            'TX-A20S-M12': 1.486,
+            'TX-A20S-UBM-UBM2': 2.982,
         }
 
         assert self.product in template2pixelsize, "No pixel size record found: ".format(self.product)
