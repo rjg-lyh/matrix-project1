@@ -86,6 +86,9 @@ class KlarfInfo(AoiInfo):
     def img(self) -> np.ndarray:
         return self.image
 
+    @property
+    def num_defects_in_wafer(self):
+        return len(self.aoi_info['defects'])
 
     @classmethod
     def _format_klarf_info(cls, klarf_info, image_name):
