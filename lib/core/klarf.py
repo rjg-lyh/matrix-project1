@@ -167,3 +167,13 @@ class KlarfInfo(AoiInfo):
             lines = list(fid.readlines())
         klarf_info = parse_klarf_lines(lines)
         return cls._format_klarf_info(klarf_info, image_name)
+
+    @classmethod
+    def from_wafer_dir(cls, wafer_dir):
+        """
+        get product name, lot id, step id and wafer id etc, from the wafer dir
+        (containing only 1 klarf file).
+        """
+        klarf_files = glob.glob(os.path.join(wafer_dir, '*.klarf'))
+        assert len(klarf_files) == 1, "Find 0 or more than one klarf files in folder: {}".format(wafer_dir)
+        return cls.from_klarf_path(klarf_files[0])
