@@ -105,6 +105,7 @@ class ChangdianAoiInfo(KlarfInfo):
             'ON-CP74-001-SWF(HD4100)-M2': 1.505,
             'TX-A20S-M12': 1.486,
             'TX-A20S-UBM-UBM2': 2.982,
+            'MPS-ST3122AR5-UBM': 3,
         }
 
         assert self.product in template2pixelsize, "No pixel size record found: ".format(self.product)
