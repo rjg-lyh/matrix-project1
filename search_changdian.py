@@ -1,5 +1,5 @@
 import os
-from aoi_info.lib.changdian import ChangdianAoiInfo
+from lib.changdian import ChangdianAoiInfo
 from collections import defaultdict
 
 class Solution:
